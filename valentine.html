@@ -137,9 +137,9 @@
             display: flex;
             gap: 30px;
             justify-content: center;
+            align-items: center;
             margin-top: 30px;
-            position: relative;
-            height: 80px;
+            min-height: 80px;
         }
 
         button {
@@ -167,8 +167,12 @@
         .no-btn {
             background: linear-gradient(135deg, #ddd, #bbb);
             color: #666;
-            position: absolute;
+            position: relative;
             transition: all 0.2s ease;
+        }
+
+        .no-btn.running {
+            position: fixed;
         }
 
         /* Success screen */
@@ -219,7 +223,7 @@
                 <h1>Will You Be My Valentine? 💖</h1>
                 <div class="buttons">
                     <button class="yes-btn" onclick="handleYes()">Yes! 💕</button>
-                    <button class="no-btn" id="no-btn" onmouseover="runAway(event)">No 💔</button>
+                    <button class="no-btn" id="no-btn" onclick="runAway(event)">No 💔</button>
                 </div>
             </div>
         </div>
@@ -262,8 +266,9 @@
             document.getElementById('question-screen').style.display = 'block';
         });
 
-        // Make "No" button run away
+        // Make "No" button run away on CLICK
         function runAway(event) {
+            event.preventDefault();
             const noBtn = document.getElementById('no-btn');
             const maxX = window.innerWidth - 200;
             const maxY = window.innerHeight - 100;
@@ -271,7 +276,7 @@
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
             
-            noBtn.style.position = 'fixed';
+            noBtn.classList.add('running');
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
